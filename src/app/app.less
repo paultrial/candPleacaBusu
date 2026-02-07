@@ -31,7 +31,22 @@ h1 {
   gap: 6px 12px;
   padding: 14px 16px;
   border-radius: 14px;
-  background: rgba(13, 27, 30, 0.05);
+  border: 1px solid transparent;
+  font-size: 1.05rem;
+  background:
+    linear-gradient(var(--card), var(--card)) padding-box,
+    conic-gradient(
+      from 120deg,
+      rgba(255, 77, 77, 0.35),
+      rgba(255, 169, 77, 0.35),
+      rgba(255, 240, 106, 0.35),
+      rgba(107, 255, 149, 0.35),
+      rgba(77, 210, 255, 0.35),
+      rgba(138, 107, 255, 0.35),
+      rgba(255, 77, 155, 0.35),
+      rgba(255, 77, 77, 0.35)
+    )
+    border-box;
 }
 
 .departure__line {
@@ -49,7 +64,7 @@ h1 {
 .departure__time {
   grid-area: time;
   color: var(--muted);
-  font-size: 0.95rem;
+  font-size: 1rem;
 }
 
 .status {

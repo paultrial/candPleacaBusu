@@ -39,11 +39,20 @@ export class BusScheduleService {
     url.searchParams.set('t', cacheKey);
     const apiUrl = `/api/ratbv?path=${encodeURIComponent(url.pathname)}&t=${cacheKey}`;
     const proxyUrl = `/ratbv${url.pathname}${url.search}`;
-    const attempts = [
-      { url: apiUrl, viaProxy: true },
-      { url: proxyUrl, viaProxy: true },
-      { url: url.toString(), viaProxy: false }
-    ];
+    const isLocal =
+      typeof window !== 'undefined' &&
+      (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+    const attempts = isLocal
+      ? [
+          { url: proxyUrl, viaProxy: true },
+          { url: apiUrl, viaProxy: true },
+          { url: url.toString(), viaProxy: false }
+        ]
+      : [
+          { url: apiUrl, viaProxy: true },
+          { url: proxyUrl, viaProxy: true },
+          { url: url.toString(), viaProxy: false }
+        ];
     let lastError: unknown;
 
     for (const attempt of attempts) {
