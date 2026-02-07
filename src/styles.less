@@ -1,1 +1,32 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  color-scheme: light;
+  --ink: #0d1b1e;
+  --muted: #5b6d73;
+  --accent: #ea5b2e;
+  --accent-2: #1b8076;
+  --card: #ffffff;
+  --glass: rgba(255, 255, 255, 0.75);
+  --shadow: 0 20px 40px rgba(10, 25, 28, 0.15);
+  --ring: rgba(27, 128, 118, 0.35);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'IBM Plex Sans', 'Segoe UI', sans-serif;
+  color: var(--ink);
+  background:
+    radial-gradient(circle at 10% 10%, #fff1d9 0%, #f8eddc 28%, transparent 55%),
+    radial-gradient(circle at 90% 20%, #e2f2f0 0%, #eef4f2 40%, transparent 70%),
+    linear-gradient(135deg, #f8efe7 0%, #e9eff1 55%, #f4f0ea 100%);
+  min-height: 100vh;
+}
+
+a {
+  color: inherit;
+}

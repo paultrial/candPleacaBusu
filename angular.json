@@ -64,7 +64,8 @@
               "buildTarget": "CandPleacaBusu:build:production"
             },
             "development": {
-              "buildTarget": "CandPleacaBusu:build:development"
+              "buildTarget": "CandPleacaBusu:build:development",
+              "proxyConfig": "proxy.conf.json"
             }
           },
           "defaultConfiguration": "development"

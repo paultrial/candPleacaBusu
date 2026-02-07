@@ -1,0 +1,10 @@
+{
+  "/ratbv": {
+    "target": "https://www.ratbv.ro",
+    "secure": true,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/ratbv": ""
+    }
+  }
+}
