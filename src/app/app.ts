@@ -10,6 +10,7 @@ import { BusScheduleService, DayType, RouteSchedule } from './bus-schedule.servi
 export class App implements OnInit, OnDestroy {
   private readonly scheduleService = inject(BusScheduleService);
   private timerId: number | null = null;
+  private scheduleRefreshId: number | null = null;
 
   protected readonly now = signal(new Date());
   protected readonly combinedDepartures = signal<CombinedDeparture[]>([]);
@@ -43,11 +44,17 @@ export class App implements OnInit, OnDestroy {
       this.now.set(new Date());
       this.updateDepartures();
     }, 10000);
+    this.scheduleRefreshId = window.setInterval(() => {
+      this.refreshAll();
+    }, 900000);
   }
 
   ngOnDestroy(): void {
     if (this.timerId) {
       window.clearInterval(this.timerId);
+    }
+    if (this.scheduleRefreshId) {
+      window.clearInterval(this.scheduleRefreshId);
     }
   }
 

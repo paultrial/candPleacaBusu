@@ -34,10 +34,15 @@ export class BusScheduleService {
   }
 
   private async fetchHtml(sourceUrl: string): Promise<{ html: string; viaProxy: boolean }> {
-    const proxyUrl = `/ratbv${new URL(sourceUrl).pathname}`;
+    const url = new URL(sourceUrl);
+    const cacheKey = Date.now().toString();
+    url.searchParams.set('t', cacheKey);
+    const apiUrl = `/api/ratbv?path=${encodeURIComponent(url.pathname)}&t=${cacheKey}`;
+    const proxyUrl = `/ratbv${url.pathname}${url.search}`;
     const attempts = [
+      { url: apiUrl, viaProxy: true },
       { url: proxyUrl, viaProxy: true },
-      { url: sourceUrl, viaProxy: false }
+      { url: url.toString(), viaProxy: false }
     ];
     let lastError: unknown;
 
