@@ -301,5 +301,31 @@ const BUS_STOPS: BusStopConfig[] = [
         url: 'https://www.ratbv.ro/afisaje/50-intors/line_50_1_cl1_ro.html'
       }
     ]
+  },
+  {
+    id: 'Sanitas',
+    label: 'Sanitas',
+    routes: [
+      {
+        id: '4-dus',
+        lineLabel: '4',
+        routeLabel: 'Sanitas',
+        url: 'https://www.ratbv.ro/afisaje/4-dus/line_4_6_cl2_ro.html'
+      },
+      {
+        id: '50-intors',
+        lineLabel: '50',
+        routeLabel: 'Sanitas',
+        url: 'https://www.ratbv.ro/afisaje/50-intors/line_50_2_cl1_ro.html'
+      },
+      {
+        id: '52-intors',
+        lineLabel: '52',
+        routeLabel: 'Tocile - Roman (Panselelor)',
+        url: 'https://www.ratbv.ro/afisaje/52-dus/line_52_13_cl2_ro.html'
+      }
+    ]
   }
+  // 
+
 ];
