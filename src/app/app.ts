@@ -325,7 +325,37 @@ const BUS_STOPS: BusStopConfig[] = [
         url: 'https://www.ratbv.ro/afisaje/52-dus/line_52_13_cl2_ro.html'
       }
     ]
-  }
-  // 
+  },
+  {
+    id: 'Lidl',
+    label: 'Lidl',
+    routes: [
+      {
+        id: '41-intors',
+        lineLabel: '41',
+        routeLabel: 'Lidl',
+        url: 'https://ratbv.ro/afisaje/41-dus/line_41_23_cl2_ro.html'
+      }
+    ]
+  },
+  {
+    id: 'Livada',
+    label: 'Livada',
+    routes: [
+      {
+        id: '4-dus',
+        lineLabel: '4',
+        routeLabel: 'Livada',
+        url: 'https://www.ratbv.ro/afisaje/4-dus/line_4_8_cl2_ro.html'
+      },
+      {
+        id: '50-intors',
+        lineLabel: '50',
+        routeLabel: 'Livada',
+        url: 'https://ratbv.ro/afisaje/50-intors/line_50_4_cl1_ro.html'
+      }
+    ]
+  },
+
 
 ];

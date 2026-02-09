@@ -6,7 +6,14 @@ const ALLOWED_PATHS = new Set([
   '/afisaje/50-intors/line_50_1_cl1_ro.html',
   '/afisaje/4-dus/line_4_6_cl2_ro.html',
   '/afisaje/50-intors/line_50_2_cl1_ro.html',
-  '/afisaje/52-dus/line_52_13_cl2_ro.html'
+  '/afisaje/52-dus/line_52_13_cl2_ro.html',
+  '/afisaje/41-dus/line_41_23_cl2_ro.html',
+  '/afisaje/4-dus/line_4_6_cl2_ro.html',
+  '/afisaje/50-intors/line_50_2_cl1_ro.html',
+  '/afisaje/52-dus/line_52_13_cl2_ro.html',
+  '/afisaje/41-dus/line_41_23_cl2_ro.html',
+  '/afisaje/4-dus/line_4_8_cl2_ro.html',
+  '/afisaje/50-intors/line_50_4_cl1_ro.html',
 ]);
 
 module.exports = async (req, res) => {
