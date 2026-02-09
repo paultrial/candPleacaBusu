@@ -262,7 +262,7 @@ interface BusStopConfig {
 const BUS_STOPS: BusStopConfig[] = [
   {
     id: 'liceul-saguna',
-    label: 'Saguna',
+    label: 'Șaguna',
     routes: [
       {
         id: '50-dus',
