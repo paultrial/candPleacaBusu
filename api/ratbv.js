@@ -3,7 +3,10 @@ const ALLOWED_PATHS = new Set([
   '/afisaje/4-intors/line_4_3_cl1_ro.html',
   '/afisaje/52-intors/line_52_3_cl1_ro.html',
   '/afisaje/4-dus/line_4_5_cl2_ro.html',
-  '/afisaje/50-intors/line_50_1_cl1_ro.html'
+  '/afisaje/50-intors/line_50_1_cl1_ro.html',
+  "afisaje/4-dus/line_4_6_cl2_ro.html",
+  "afisaje/50-intors/line_50_2_cl1_ro.html",
+  "afisaje/52-dus/line_52_13_cl2_ro.html"
 ]);
 
 module.exports = async (req, res) => {
