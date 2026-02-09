@@ -12,31 +12,11 @@ export class App implements OnInit, OnDestroy {
   private timerId: number | null = null;
   private scheduleRefreshId: number | null = null;
 
+  protected readonly busStops = BUS_STOPS;
+  protected readonly selectedStopId = signal(BUS_STOPS[0]?.id ?? '');
   protected readonly now = signal(new Date());
   protected readonly combinedDepartures = signal<CombinedDeparture[]>([]);
-  protected readonly routes = signal<RouteCard[]>([
-    {
-      id: '50-dus',
-      lineLabel: '50',
-      routeLabel: 'Solomon - Camera de Comert',
-      url: 'https://www.ratbv.ro/afisaje/50-dus/line_50_9_cl2_ro.html',
-      state: 'loading'
-    },
-    {
-      id: '4-intors',
-      lineLabel: '4',
-      routeLabel: 'Tocile - Terminal Gara',
-      url: 'https://www.ratbv.ro/afisaje/4-intors/line_4_3_cl1_ro.html',
-      state: 'loading'
-    },
-    {
-      id: '52-intors',
-      lineLabel: '52',
-      routeLabel: 'Tocile - Roman (Panselelor)',
-      url: 'https://www.ratbv.ro/afisaje/52-intors/line_52_3_cl1_ro.html',
-      state: 'loading'
-    }
-  ]);
+  protected readonly routes = signal<RouteCard[]>(this.buildRoutes(this.selectedStopId()));
 
   ngOnInit(): void {
     this.refreshAll();
@@ -79,6 +59,20 @@ export class App implements OnInit, OnDestroy {
       return 'now';
     }
     return `${minutes} min`;
+  }
+
+  protected selectStop(stopId: string): void {
+    if (stopId === this.selectedStopId()) {
+      return;
+    }
+    const next = this.getStopConfig(stopId);
+    if (!next) {
+      return;
+    }
+    this.selectedStopId.set(stopId);
+    this.routes.set(this.buildRoutes(stopId));
+    this.combinedDepartures.set([]);
+    this.refreshAll();
   }
 
   private async refreshAll(): Promise<void> {
@@ -209,6 +203,21 @@ export class App implements OnInit, OnDestroy {
     }
     return 'weekday';
   }
+
+  private buildRoutes(stopId: string): RouteCard[] {
+    const stop = this.getStopConfig(stopId);
+    if (!stop) {
+      return [];
+    }
+    return stop.routes.map((route) => ({
+      ...route,
+      state: 'loading'
+    }));
+  }
+
+  private getStopConfig(stopId: string): BusStopConfig | undefined {
+    return BUS_STOPS.find((stop) => stop.id === stopId);
+  }
 }
 
 type LoadState = 'loading' | 'ready' | 'error';
@@ -236,3 +245,61 @@ interface CombinedDeparture extends NextDeparture {
   lineLabel: string;
   viaProxy: boolean;
 }
+
+interface RouteConfig {
+  id: string;
+  lineLabel: string;
+  routeLabel: string;
+  url: string;
+}
+
+interface BusStopConfig {
+  id: string;
+  label: string;
+  routes: RouteConfig[];
+}
+
+const BUS_STOPS: BusStopConfig[] = [
+  {
+    id: 'liceul-saguna',
+    label: 'Saguna',
+    routes: [
+      {
+        id: '50-dus',
+        lineLabel: '50',
+        routeLabel: 'Solomon - Camera de Comert',
+        url: 'https://www.ratbv.ro/afisaje/50-dus/line_50_9_cl2_ro.html'
+      },
+      {
+        id: '4-intors',
+        lineLabel: '4',
+        routeLabel: 'Tocile - Terminal Gara',
+        url: 'https://www.ratbv.ro/afisaje/4-intors/line_4_3_cl1_ro.html'
+      },
+      {
+        id: '52-intors',
+        lineLabel: '52',
+        routeLabel: 'Tocile - Roman (Panselelor)',
+        url: 'https://www.ratbv.ro/afisaje/52-intors/line_52_3_cl1_ro.html'
+      }
+    ]
+  },
+  {
+    id: 'cdc',
+    label: 'CDC',
+    routes: [
+      {
+        id: '4-dus',
+        lineLabel: '4',
+        routeLabel: 'CDC',
+        url: 'https://www.ratbv.ro/afisaje/4-dus/line_4_5_cl2_ro.html'
+      },
+      {
+        id: '50-intors',
+        lineLabel: '50',
+        routeLabel: 'CDC',
+        url: 'https://www.ratbv.ro/afisaje/50-intors/line_50_1_cl1_ro.html'
+      }
+    ]
+  }
+];

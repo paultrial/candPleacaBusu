@@ -1,5 +1,19 @@
 <main class="page">
   <h1>Upcoming buses</h1>
+  <div class="stop-tabs" role="tablist" aria-label="Bus stops">
+    @for (stop of busStops; track stop.id) {
+      <button
+        type="button"
+        class="stop-tab"
+        role="tab"
+        [class.is-active]="selectedStopId() === stop.id"
+        [attr.aria-selected]="selectedStopId() === stop.id"
+        (click)="selectStop(stop.id)"
+      >
+        {{ stop.label }}
+      </button>
+    }
+  </div>
   @if (combinedDepartures().length) {
     <ul class="departures">
       @for (departure of combinedDepartures(); track departure.time.getTime()) {
