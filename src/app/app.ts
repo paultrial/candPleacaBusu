@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, inject, signal } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, inject, signal } from '@angular/core';
 import { BusScheduleService, DayType, RouteSchedule } from './bus-schedule.service';
 
 @Component({
@@ -11,6 +11,16 @@ export class App implements OnInit, OnDestroy {
   private readonly scheduleService = inject(BusScheduleService);
   private timerId: number | null = null;
   private scheduleRefreshId: number | null = null;
+  private isDraggingTabs = false;
+  private isTrackingTabs = false;
+  private dragStartX = 0;
+  private dragStartY = 0;
+  private dragStartScroll = 0;
+  private dragPointerId: number | null = null;
+  private readonly dragThreshold = 6;
+
+  @ViewChild('stopTabs', { static: true })
+  private stopTabsRef?: ElementRef<HTMLDivElement>;
 
   protected readonly busStops = BUS_STOPS;
   protected readonly selectedStopId = signal(BUS_STOPS[0]?.id ?? '');
@@ -74,6 +84,61 @@ export class App implements OnInit, OnDestroy {
     this.combinedDepartures.set([]);
     this.refreshAll();
   }
+
+  protected onTabsPointerDown(event: PointerEvent): void {
+    if (event.button !== 0) {
+      return;
+    }
+    const container = this.stopTabsRef?.nativeElement;
+    if (!container) {
+      return;
+    }
+    this.isTrackingTabs = true;
+    this.isDraggingTabs = false;
+    this.dragPointerId = event.pointerId;
+    this.dragStartX = event.clientX;
+    this.dragStartY = event.clientY;
+    this.dragStartScroll = container.scrollLeft;
+  }
+
+  protected onTabsPointerMove(event: PointerEvent): void {
+    if (!this.isTrackingTabs || event.pointerId !== this.dragPointerId) {
+      return;
+    }
+    const container = this.stopTabsRef?.nativeElement;
+    if (!container) {
+      return;
+    }
+    const deltaX = event.clientX - this.dragStartX;
+    const deltaY = event.clientY - this.dragStartY;
+    if (!this.isDraggingTabs) {
+      if (Math.abs(deltaX) < this.dragThreshold || Math.abs(deltaX) <= Math.abs(deltaY)) {
+        return;
+      }
+      this.isDraggingTabs = true;
+      container.classList.add('is-dragging');
+      container.setPointerCapture(event.pointerId);
+    }
+    container.scrollLeft = this.dragStartScroll - deltaX;
+    event.preventDefault();
+  }
+
+  protected onTabsPointerUp(event: PointerEvent): void {
+    if (!this.isTrackingTabs || (this.dragPointerId !== null && event.pointerId !== this.dragPointerId)) {
+      return;
+    }
+    const container = this.stopTabsRef?.nativeElement;
+    if (container) {
+      container.classList.remove('is-dragging');
+      if (this.isDraggingTabs && this.dragPointerId !== null) {
+        container.releasePointerCapture(this.dragPointerId);
+      }
+    }
+    this.isDraggingTabs = false;
+    this.isTrackingTabs = false;
+    this.dragPointerId = null;
+  }
+
 
   private async refreshAll(): Promise<void> {
     const configs = this.routes();

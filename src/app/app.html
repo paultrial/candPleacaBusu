@@ -1,18 +1,30 @@
 <main class="page">
   <h1>Urmatoarele Busuri</h1>
-  <div class="stop-tabs" role="tablist" aria-label="Bus stops">
-    @for (stop of busStops; track stop.id) {
-      <button
-        type="button"
-        class="stop-tab"
-        role="tab"
-        [class.is-active]="selectedStopId() === stop.id"
-        [attr.aria-selected]="selectedStopId() === stop.id"
-        (click)="selectStop(stop.id)"
-      >
-        {{ stop.label }}
-      </button>
-    }
+  <div class="stop-tabs-slider" aria-label="Bus stops">
+    <div
+      class="stop-tabs"
+      role="tablist"
+      tabindex="0"
+      #stopTabs
+      (pointerdown)="onTabsPointerDown($event)"
+      (pointermove)="onTabsPointerMove($event)"
+      (pointerup)="onTabsPointerUp($event)"
+      (pointercancel)="onTabsPointerUp($event)"
+      (pointerleave)="onTabsPointerUp($event)"
+    >
+      @for (stop of busStops; track stop.id) {
+        <button
+          type="button"
+          class="stop-tab"
+          role="tab"
+          [class.is-active]="selectedStopId() === stop.id"
+          [attr.aria-selected]="selectedStopId() === stop.id"
+          (click)="selectStop(stop.id)"
+        >
+          {{ stop.label }}
+        </button>
+      }
+    </div>
   </div>
   @if (combinedDepartures().length) {
     <ul class="departures">

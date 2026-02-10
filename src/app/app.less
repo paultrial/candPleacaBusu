@@ -14,16 +14,30 @@ h1 {
   font-weight: 700;
 }
 
+.stop-tabs-slider {
+  margin: 0 0 14px;
+}
+
 .stop-tabs {
-  display: inline-flex;
-  flex-wrap: wrap;
+  display: flex;
+  flex-wrap: nowrap;
   gap: 6px;
-  padding: 6px;
-  margin: 0 0 22px;
-  // border-radius: 999px;
-  // background: rgba(20, 33, 39, 0.75);
-  // border: 1px solid rgba(94, 212, 200, 0.18);
-  // box-shadow: 0 16px 28px rgba(0, 0, 0, 0.28);
+  padding: 4px 2px;
+  width: 100%;
+  box-sizing: border-box;
+  overflow-x: auto;
+  overflow-y: hidden;
+  padding-right: 12px;
+  touch-action: pan-y;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  cursor: grab;
+  user-select: none;
+  -webkit-user-select: none;
+}
+
+.stop-tabs::-webkit-scrollbar {
+  display: none;
 }
 
 .stop-tab {
@@ -42,6 +56,10 @@ h1 {
     transform 0.2s ease;
 }
 
+.stop-tabs.is-dragging {
+  cursor: grabbing;
+}
+
 .stop-tab:hover {
   transform: translateY(-1px);
   border-color: rgba(255, 131, 91, 0.35);
@@ -57,6 +75,7 @@ h1 {
   outline: 2px solid var(--ring);
   outline-offset: 2px;
 }
+
 
 .departures {
   list-style: none;
