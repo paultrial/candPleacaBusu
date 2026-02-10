@@ -356,6 +356,17 @@ const BUS_STOPS: BusStopConfig[] = [
       }
     ]
   },
-
+  {
+    id: 'Gara',
+    label: 'Gara',
+    routes: [
+      {
+        id: '4-dus',
+        lineLabel: '4',
+        routeLabel: 'Livada',
+        url: 'https://www.ratbv.ro/afisaje/4-dus/line_4_1_cl2_ro.html'
+      }
+    ]
+  }
 
 ];
