@@ -86,6 +86,10 @@ export class App implements OnInit, OnDestroy {
   }
 
   protected onTabsPointerDown(event: PointerEvent): void {
+    if (event.pointerType !== 'mouse') {
+      // Let touch/pen use native momentum scrolling.
+      return;
+    }
     if (event.button !== 0) {
       return;
     }
